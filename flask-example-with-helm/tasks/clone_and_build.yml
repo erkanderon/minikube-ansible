@@ -1,0 +1,33 @@
+---
+- name: Clone repository
+  ansible.builtin.git:
+    repo: https://github.com/erkanderon/hello-world-flask-app.git
+    dest: /tmp/temporary
+    clone: yes
+    version: main
+
+- name: Docker build
+  become: yes
+  shell: cd /tmp/temporary && docker build -t flask-app-example:latest .
+
+- name: Add image to Minikube cache
+  become: yes
+  shell: minikube image load flask-app-example
+
+- name: copy chart to /tmp
+  copy:
+    src: chart
+    dest: /tmp/
+    directory_mode: yes
+
+- name: Helm lint
+  become: yes
+  shell: helm lint /tmp/chart
+
+- name: Helm package
+  become: yes
+  shell: helm package /tmp/chart --dependency-update
+
+- name: Helm deploy
+  become: yes
+  shell: helm upgrade --install flask-app-example helm-template-1.0.0.tgz

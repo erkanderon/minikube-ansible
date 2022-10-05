@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "appName.shortname" . }}
+spec:
+  type: NodePort
+  selector:
+    {{- include "appName.selectorLabels" . | nindent 4 }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.container_port }}
+      nodePort: {{ .Values.service.node_port }}

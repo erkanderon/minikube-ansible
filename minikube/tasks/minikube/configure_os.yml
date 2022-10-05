@@ -1,0 +1,46 @@
+---
+- name: Upgrade all packages
+  ansible.builtin.yum:
+    name: '*'
+    state: latest
+
+- name: Install a list of packages with a list variable
+  ansible.builtin.yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - libvirt
+    - qemu-kvm
+    - virt-install
+    - virt-top
+    - libguestfs-tools
+    - bridge-utils
+
+- name: Make sure a service unit is running
+  ansible.builtin.systemd:
+    state: started
+    name: libvirtd
+
+- name: Enable libvirtd
+  ansible.builtin.systemd:
+    name: libvirtd
+    state: started
+    enabled: yes
+
+- name: adding existing user user to group sudo
+  user:
+    name: "{{ user }}"
+    groups: libvirt
+    append: yes
+
+- template:
+    src: ../templates/libvirtd.conf
+    dest: /etc/libvirt/libvirtd.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Restart libvirtd
+  ansible.builtin.systemd:
+    name: libvirtd
+    state: restarted

@@ -1,0 +1,60 @@
+---
+- name: Install epel repository
+  ansible.builtin.yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - epel-release
+
+- name: Install nginx
+  ansible.builtin.yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - nginx
+
+- name: Enable ingress
+  become: yes
+  shell: minikube addons enable ingress
+
+- name: get minikube ip
+  become: yes
+  shell: minikube ip
+  register: minikube_ip
+
+- template:
+    src: ../templates/ingress.yaml
+    dest: /tmp/ingress.yaml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Apply ingress
+  become: yes
+  raw: kubectl apply -f /tmp/ingress.yaml
+
+- template:
+    src: ../templates/hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644
+
+- template:
+    src: ../templates/ingress.conf
+    dest: /etc/nginx/conf.d/ingress.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- template:
+    src: ../templates/nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Make sure nginx started
+  ansible.builtin.systemd:
+    state: started
+    name: nginx

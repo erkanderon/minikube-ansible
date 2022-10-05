@@ -1,0 +1,12 @@
+- hosts: minikube
+  become: yes
+  become_user: root
+#  handlers:
+#  - import_tasks: ../handlers/main.yml
+  tasks:
+  - name: Install Dependencies
+    include_tasks: ../tasks/minikube/configure_os.yml
+  - name: Install Minikube
+    include_tasks: ../tasks/minikube/install_minikube.yml
+  - name: Install Helm
+    include_tasks: ../tasks/helm/install_helm.yml

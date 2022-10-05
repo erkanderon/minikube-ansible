@@ -1,0 +1,15 @@
+[minikube]
+192.168.56.241 ansible_port=22 ansible_ssh_user=vagrant
+192.168.56.242 ansible_port=22 ansible_ssh_user=vagrant
+
+[flask]
+192.168.56.241 ansible_port=22 ansible_ssh_user=vagrant
+192.168.56.242 ansible_port=22 ansible_ssh_user=vagrant
+
+[git]
+192.168.56.241 ansible_port=22 ansible_ssh_user=vagrant
+192.168.56.242 ansible_port=22 ansible_ssh_user=vagrant
+
+[nginx]
+192.168.56.241 ansible_port=22 ansible_ssh_user=vagrant
+192.168.56.242 ansible_port=22 ansible_ssh_user=vagrant

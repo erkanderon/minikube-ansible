@@ -1,0 +1,25 @@
+---
+user: "root"
+
+# kubectl variables
+kubectl_conf:
+  path:
+    bin: '/usr/bin/'
+    script: '~/scripts'
+  version: latest
+  latest_url: 'https://storage.googleapis.com/kubernetes-release/release/stable.txt'
+  release_url: 'https://storage.googleapis.com/kubernetes-release/release'
+  install_completion: true
+  ensure_prerequisites: false
+
+ansible_distribution: 'rhel'
+
+
+# helm variables
+helm_version: 'v3.2.1'
+helm_platform: linux
+helm_arch: amd64
+
+helm_repo_path: "https://get.helm.sh"
+
+helm_bin_path: /usr/bin/helm

@@ -1,0 +1,5 @@
+version: 2.19.1
+prefix: /usr/local
+temp_dir: /tmp
+binary_dir: "{{ temp_dir }}/git-{{ version }}"
+url: "https://www.kernel.org/pub/software/scm/git/git-{{ version }}.tar.gz"

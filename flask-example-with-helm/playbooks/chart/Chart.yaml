@@ -1,0 +1,6 @@
+apiVersion: v2
+name: helm-template
+description: helm chart example
+version: 1.0.0
+appVersion: 1.0.0
+metadata: test

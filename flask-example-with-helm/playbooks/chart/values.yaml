@@ -1,0 +1,13 @@
+app_name: flask-app
+shortname: fl-ap
+replicas: 1
+
+image: flask-app-example
+image_name: flask-app-example
+image_namespace: test-app
+
+
+service:
+  port: 8080
+  container_port: 8080
+  node_port: 30007

@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "appName.shortname" . }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      {{- include "appName.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "appName.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ include "appName.shortname" . }}
+        image: {{ .Values.image }}
+        imagePullPolicy: Never
+        ports:
+        - containerPort: {{ .Values.service.container_port }}

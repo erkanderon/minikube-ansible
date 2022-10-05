@@ -1,0 +1,6 @@
+- hosts: flask
+  become: yes
+  become_user: root
+  tasks:
+  - name: Clone and Build
+    include_tasks: ../tasks/clone_and_build.yml

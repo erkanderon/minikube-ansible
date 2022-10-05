@@ -1,0 +1,6 @@
+- hosts: git
+  become: yes
+  become_user: root
+  tasks:
+  - name: git install
+    include_tasks: ../tasks/install_git.yml

@@ -1,0 +1,15 @@
+---
+
+- name: "Get latest kubectl version"
+  command: "curl -s {{kubectl_conf.latest_url}}"
+  args:
+    warn: false
+  register: latest_version
+  failed_when:  false
+  changed_when: false
+
+- name: download kubectl
+  get_url:
+    url:   "{{kubectl_conf.release_url}}/{{(kubectl_conf.version == 'latest')|ternary(latest_version.stdout,kubectl_conf.version)}}/bin/linux/amd64/kubectl"
+    dest:  "{{kubectl_conf.path.bin}}/kubectl"
+    mode: a+x

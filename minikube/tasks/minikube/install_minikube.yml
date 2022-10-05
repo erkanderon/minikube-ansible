@@ -1,0 +1,17 @@
+---
+- name: Download minikube
+  become: yes
+  ansible.builtin.get_url:
+    url: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    dest: /usr/bin/minikube
+    mode: a+x
+
+- name: Install Kubectl
+  include_tasks: ../kubectl/install_kubectl.yml
+
+- name: Install Docker
+  include_tasks: ../docker/install_docker.yml
+
+- name: start Minikube
+  become: yes
+  shell: minikube start --force
